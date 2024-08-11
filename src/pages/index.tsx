@@ -1,12 +1,20 @@
 import React from "react";
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
+import { StartGameCard } from "@/components/settings/StartGameCard";
 
 export default function Index() {
   return (
-    <Container>
-      <Typography variant="h1" align="center">
-        Welcome to Number Guessing Game
-      </Typography>
-    </Container>
+    <React.Fragment>
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <StartGameCard />
+      </Container>
+    </React.Fragment>
   );
 }
