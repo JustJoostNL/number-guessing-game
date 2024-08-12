@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { StopDialog } from "./StopDialog";
+import { GameEndDialog } from "./GameEndDialog";
 import { IGuess } from "@/lib/config/config_types";
 
 interface IProps {
@@ -93,7 +93,7 @@ export const PlayCard: FC<IProps> = ({
         width: "30%",
       }}
     >
-      <StopDialog
+      <GameEndDialog
         open={dialogOpen}
         setOpen={setDialogOpen}
         number={number}

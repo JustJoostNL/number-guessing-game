@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React, { ReactNode } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import { IntlProvider } from "react-intl";
 import { theme } from "@/lib/theme/theme";
 import { ConfigProvider } from "@/hooks/useConfig";
 
@@ -26,10 +27,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <ConfigProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
+        <IntlProvider locale="en-GB" defaultLocale="en-GB">
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+        </IntlProvider>
       </ConfigProvider>
     </>
   );

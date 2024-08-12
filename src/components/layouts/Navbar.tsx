@@ -16,7 +16,7 @@ const navbarContent: { href: string; children: string }[] = [
     children: "Home",
   },
   {
-    href: "/stats",
+    href: "/statistics",
     children: "Statistics",
   },
 ];

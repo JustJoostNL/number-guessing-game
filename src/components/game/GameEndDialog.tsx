@@ -21,7 +21,7 @@ interface IProps {
   number: number;
 }
 
-export const StopDialog: FC<IProps> = ({
+export const GameEndDialog: FC<IProps> = ({
   open,
   setOpen,
   maxGuesses,
