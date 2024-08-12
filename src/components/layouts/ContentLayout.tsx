@@ -1,8 +1,8 @@
 import React from "react";
 import {
   Box,
-  BoxProps,
   Container,
+  ContainerProps,
   Typography,
   TypographyOwnProps,
 } from "@mui/material";
@@ -13,7 +13,7 @@ interface ContentLayoutProps {
   hideTitle?: boolean;
   titleVariant?: TypographyOwnProps["variant"];
   container?: boolean;
-  containerProps?: BoxProps;
+  containerProps?: ContainerProps;
 }
 
 export const ContentLayout: React.FC<ContentLayoutProps> = ({
@@ -30,7 +30,6 @@ export const ContentLayout: React.FC<ContentLayoutProps> = ({
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column" {...props}>
       <Box flexGrow={1}>
-        {/* @ts-ignore */}
         <ContainerWrapper {...containerProps}>
           {!hideTitle && title && (
             <Typography

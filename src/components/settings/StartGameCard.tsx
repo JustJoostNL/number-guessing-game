@@ -9,16 +9,18 @@ import {
   TextField,
 } from "@mui/material";
 import { RocketLaunchRounded } from "@mui/icons-material";
-import React, { FC, useState, useCallback } from "react";
+import React, { FC, useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { NumberRangeSlider } from "./NumberRangeSlider";
+import { useConfig } from "@/hooks/useConfig";
 
 const MIN_DISTANCE = 2;
 
 export const StartGameCard: FC = () => {
   const router = useRouter();
+  const { config, updateConfig } = useConfig();
 
-  const [value, setValue] = useState<number[]>([0, 25]);
+  const [value, setValue] = useState<number[]>([1, 25]);
   const [enableHints, setEnableHints] = useState<boolean>(true);
   const [maxGuesses, setMaxGuesses] = useState<number>(10);
 
@@ -34,6 +36,12 @@ export const StartGameCard: FC = () => {
   );
 
   const handleStartGame = useCallback(() => {
+    updateConfig({
+      numberRange: value as [number, number],
+      hints: enableHints,
+      maxGuesses,
+    });
+
     router.push({
       pathname: "/game",
       query: {
@@ -46,7 +54,13 @@ export const StartGameCard: FC = () => {
         ),
       },
     });
-  }, [router, value, enableHints, maxGuesses]);
+  }, [updateConfig, value, enableHints, maxGuesses, router]);
+
+  useEffect(() => {
+    setValue(config.numberRange);
+    setEnableHints(config.hints);
+    setMaxGuesses(config.maxGuesses);
+  }, [config]);
 
   const maxGuessesAllowed = value[1] - value[0];
   const maxGuessesError = maxGuesses < 1 || maxGuesses > maxGuessesAllowed;

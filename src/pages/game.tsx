@@ -6,6 +6,7 @@ import Link from "next/link";
 import { generateNumber, ISettingsPayload } from "@/lib/shared";
 import { useDebug } from "@/hooks/useDebug";
 import { ContentLayout } from "@/components/layouts/ContentLayout";
+import { PlayCard } from "@/components/game/PlayCard";
 
 export default function GamePage() {
   const params = useSearchParams();
@@ -61,6 +62,24 @@ export default function GamePage() {
 
   return (
     <ContentLayout title="Play" titleVariant="h2">
+      <Box
+        sx={{
+          margin: "auto",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {generatedNumber && decodedParams && (
+          <PlayCard
+            number={generatedNumber}
+            guesses={decodedParams?.g}
+            min={decodedParams?.v[0]}
+            max={decodedParams?.v[1]}
+            hints={decodedParams?.h}
+          />
+        )}
+      </Box>
       {debug && (
         <Box sx={{ width: "100%", overflow: "auto", mt: 2 }}>
           <JSONTree data={{ params: decodedParams, number: generatedNumber }} />
