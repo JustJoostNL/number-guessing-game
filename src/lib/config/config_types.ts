@@ -27,6 +27,11 @@ export interface IGame {
   description?: string;
 
   /**
+   * The difficulty level of the game.
+   */
+  difficulty: number;
+
+  /**
    * Whether the player has abandoned the game.
    */
   abandoned: boolean;

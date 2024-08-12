@@ -39,6 +39,16 @@ export default function GamePage() {
     setGeneratedNumber(number);
   }, [decodedParams, generatedNumber]);
 
+  const calculatedDifficulty = useMemo(() => {
+    if (!decodedParams || decodedParams === "error") return null;
+
+    const range = decodedParams.v[1] - decodedParams.v[0];
+    const maxGuesses = decodedParams.mg;
+    const difficulty = 1 - maxGuesses / range;
+
+    return parseFloat(difficulty.toFixed(2));
+  }, [decodedParams]);
+
   if (decodedParams === "error") {
     return (
       <ContentLayout title="Play" titleVariant="h2">
@@ -70,9 +80,10 @@ export default function GamePage() {
           alignItems: "center",
         }}
       >
-        {generatedNumber && decodedParams && (
+        {generatedNumber && decodedParams && calculatedDifficulty && (
           <PlayCard
             number={generatedNumber}
+            difficulty={calculatedDifficulty}
             maxGuesses={decodedParams?.mg}
             min={decodedParams?.v[0]}
             max={decodedParams?.v[1]}

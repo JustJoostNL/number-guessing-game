@@ -24,3 +24,8 @@ export function generateNumber(
 
   return numbers[Math.floor(Math.random() * numbers.length)];
 }
+
+export function safeValue(value: any) {
+  if (!value) return "";
+  return value;
+}

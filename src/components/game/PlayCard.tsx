@@ -16,6 +16,7 @@ import { IGuess } from "@/lib/config/config_types";
 interface IProps {
   number: number;
   maxGuesses: number;
+  difficulty: number;
   hintsEnabled: boolean;
   min: number;
   max: number;
@@ -30,6 +31,7 @@ interface AlertData {
 export const PlayCard: FC<IProps> = ({
   number,
   maxGuesses,
+  difficulty,
   hintsEnabled,
   min,
   max,
@@ -90,6 +92,7 @@ export const PlayCard: FC<IProps> = ({
         open={dialogOpen}
         abandoned={abandoned}
         setOpen={setDialogOpen}
+        difficulty={difficulty}
         number={number}
         maxGuesses={maxGuesses}
         guesses={guesses}

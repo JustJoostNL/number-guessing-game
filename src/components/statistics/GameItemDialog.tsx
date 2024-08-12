@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { FC, useCallback } from "react";
+import { enqueueSnackbar } from "notistack";
 import { Label, LabelColor } from "../shared/Label";
 import { Stat } from "../shared/Stat";
 import { IGame } from "@/lib/config/config_types";
@@ -43,6 +44,14 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
     },
     [config.games, game.id, updateConfig],
   );
+
+  const handleShare = useCallback(() => {
+    const gameData = btoa(JSON.stringify(game));
+    const url = `${window.location.origin}/share?d=${gameData}`;
+
+    navigator.clipboard.writeText(url);
+    enqueueSnackbar("Game URL copied to clipboard", { variant: "success" });
+  }, [game]);
 
   const handleClose = useCallback(() => {
     setOpen(false);
@@ -102,6 +111,7 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
             title="Hints"
             value={game.hintsEnabled ? "Enabled" : "Disabled"}
           />
+          <Stat title="Difficulty" value={game.difficulty} />
           <Stat
             title="Date / Time"
             value={new Date(game.date).toLocaleString()}
@@ -114,10 +124,15 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <Button color="error" onClick={handleDeleteGame}>
           Delete game
+        </Button>
+
+        <Button variant="outlined" onClick={handleShare}>
+          Share game
         </Button>
 
         <Button color="primary" variant="contained" onClick={handleClose}>
