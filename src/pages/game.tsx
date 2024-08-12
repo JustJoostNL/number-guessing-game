@@ -73,10 +73,10 @@ export default function GamePage() {
         {generatedNumber && decodedParams && (
           <PlayCard
             number={generatedNumber}
-            guesses={decodedParams?.g}
+            maxGuesses={decodedParams?.mg}
             min={decodedParams?.v[0]}
             max={decodedParams?.v[1]}
-            hints={decodedParams?.h}
+            hintsEnabled={decodedParams?.h}
           />
         )}
       </Box>

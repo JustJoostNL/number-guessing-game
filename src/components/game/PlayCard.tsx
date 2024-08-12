@@ -12,12 +12,12 @@ import {
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { StopDialog } from "./StopDialog";
-import { useConfig } from "@/hooks/useConfig";
+import { IGuess } from "@/lib/config/config_types";
 
 interface IProps {
   number: number;
-  guesses: number;
-  hints: boolean;
+  maxGuesses: number;
+  hintsEnabled: boolean;
   min: number;
   max: number;
 }
@@ -28,20 +28,25 @@ interface AlertData {
   message: string;
 }
 
-export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
-  const { config, updateConfig } = useConfig();
+export const PlayCard: FC<IProps> = ({
+  number,
+  maxGuesses,
+  hintsEnabled,
+  min,
+  max,
+}) => {
   const router = useRouter();
 
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [input, setInput] = useState<number | null>(null);
-  const [attempts, setAttempts] = useState<number>(0);
+  const [guesses, setGuesses] = useState<IGuess[]>([]);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [alertData, setAlertData] = useState<AlertData>({
     severity: "info",
     show: false,
     message: "",
   });
 
-  const shouldStop = attempts >= guesses;
+  const shouldStop = guesses.length >= maxGuesses;
 
   useEffect(() => {
     if (shouldStop) setDialogOpen(true);
@@ -50,7 +55,7 @@ export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
   const handleGuess = useCallback(() => {
     if (!input) return;
 
-    setAttempts((prev) => prev + 1);
+    setGuesses([...guesses, { number: input, date: new Date().toISOString() }]);
 
     setAlertData({
       severity: input === number ? "success" : "warning",
@@ -58,21 +63,15 @@ export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
       message:
         input === number
           ? "Congratulations! You guessed the number!"
-          : hints
+          : hintsEnabled
             ? input < number
               ? `The number ${input} is too low, try a higher number!`
               : `The number ${input} is too high, try a lower number!`
             : `The number ${input} is incorrect, try again!`,
     });
 
-    if (input === number) {
-      setDialogOpen(true);
-      updateConfig({
-        winCount: config.winCount + 1,
-        playedGames: config.playedGames + 1,
-      });
-    }
-  }, [config.playedGames, config.winCount, hints, input, number, updateConfig]);
+    if (input === number) setDialogOpen(true);
+  }, [guesses, hintsEnabled, input, number]);
 
   const handleLeaveEarly = useCallback(() => {
     router.push("/");
@@ -97,9 +96,11 @@ export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
       <StopDialog
         open={dialogOpen}
         setOpen={setDialogOpen}
-        attempts={attempts}
         number={number}
-        lastAttempt={input ?? 0}
+        maxGuesses={maxGuesses}
+        guesses={guesses}
+        numberRange={[min, max]}
+        hintsEnabled={hintsEnabled}
       />
       <CardHeader
         title="Guess the number"
@@ -117,7 +118,7 @@ export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
             }}
           >
             <AlertTitle sx={{ mb: 0 }}>{alertData.message}</AlertTitle>
-            You have {guesses - attempts} guesses left.
+            You have {maxGuesses - guesses.length} guesses left.
           </Alert>
         )}
 

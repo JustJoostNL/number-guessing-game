@@ -8,29 +8,69 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { FC, useCallback } from "react";
+import { useConfig } from "@/hooks/useConfig";
+import { IGuess } from "@/lib/config/config_types";
 
 interface IProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  attempts: number;
+  maxGuesses: number;
+  guesses: IGuess[];
+  numberRange: [number, number];
+  hintsEnabled: boolean;
   number: number;
-  lastAttempt: number;
 }
 
 export const StopDialog: FC<IProps> = ({
   open,
   setOpen,
-  attempts,
+  maxGuesses,
+  guesses,
+  numberRange,
+  hintsEnabled,
   number,
-  lastAttempt,
 }) => {
+  const { config, updateConfig } = useConfig();
   const router = useRouter();
+
+  const attempts = guesses.length;
+  const lastAttempt = guesses[attempts - 1]?.number;
   const lastAttemptWasCorrect = lastAttempt === number;
+
+  const handleRegisterGame = useCallback(() => {
+    const nextId = config.games.length + 1;
+
+    updateConfig({
+      games: [
+        ...config.games,
+        {
+          id: nextId,
+          maxGuesses,
+          number,
+          guesses,
+          numberRange,
+          hintsEnabled,
+          won: lastAttemptWasCorrect,
+          date: new Date().toISOString(),
+        },
+      ],
+    });
+  }, [
+    config.games,
+    guesses,
+    hintsEnabled,
+    lastAttemptWasCorrect,
+    maxGuesses,
+    number,
+    numberRange,
+    updateConfig,
+  ]);
 
   const handleGoHome = useCallback(() => {
     setOpen(false);
+    handleRegisterGame();
     router.push("/");
-  }, [router, setOpen]);
+  }, [handleRegisterGame, router, setOpen]);
 
   return (
     <Dialog open={open} onClose={handleGoHome} fullWidth maxWidth="sm">

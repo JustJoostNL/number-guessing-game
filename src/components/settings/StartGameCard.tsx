@@ -49,7 +49,7 @@ export const StartGameCard: FC = () => {
           JSON.stringify({
             v: value,
             h: enableHints,
-            g: maxGuesses,
+            mg: maxGuesses,
           }),
         ),
       },
@@ -130,7 +130,7 @@ export const StartGameCard: FC = () => {
           color="primary"
           startIcon={<RocketLaunchRounded />}
           disabled={maxGuessesError}
-          sx={{ display: "flex", margin: "auto", marginTop: 2, width: 150 }}
+          sx={{ display: "flex", margin: "auto", marginTop: 2, width: 200 }}
           onClick={handleStartGame}
         >
           Start Game

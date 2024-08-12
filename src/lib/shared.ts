@@ -1,7 +1,7 @@
 export interface ISettingsPayload {
   v: number[];
   h: boolean;
-  g: number;
+  mg: number;
 }
 
 export function generateNumber(

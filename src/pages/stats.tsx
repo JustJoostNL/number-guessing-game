@@ -10,9 +10,16 @@ export default function StatsPage() {
   const { config } = useConfig();
   const debug = useDebug();
 
+  const winCount = useMemo(
+    () => config.games.filter((g) => g.won).length,
+    [config.games],
+  );
+
+  const playedGames = useMemo(() => config.games.length, [config.games]);
+
   const winRate = useMemo(
-    () => (config.winCount / config.playedGames) * 100,
-    [config.playedGames, config.winCount],
+    () => (winCount / playedGames) * 100,
+    [winCount, playedGames],
   );
 
   return (
@@ -35,8 +42,8 @@ export default function StatsPage() {
             gap: 4,
           }}
         >
-          <Stat title="Played games" value={config.playedGames} />
-          <Stat title="Wins" value={config.winCount} />
+          <Stat title="Played games" value={playedGames} />
+          <Stat title="Wins" value={winCount} />
           <Stat title="Win rate" value={`${winRate.toFixed(2)}%`} />
         </CardContent>
       </Card>
