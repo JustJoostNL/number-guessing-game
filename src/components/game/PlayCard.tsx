@@ -106,7 +106,6 @@ export const PlayCard: FC<IProps> = ({
           <Alert
             severity={alertData.severity}
             sx={{
-              marginBottom: 2,
               display: "flex",
               alignItems: "center",
             }}
@@ -121,7 +120,7 @@ export const PlayCard: FC<IProps> = ({
           type="number"
           value={input ?? ""}
           onChange={handleInputChange}
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", mt: 3 }}
           error={input !== null && (input < min || input > max)}
           helperText={`Must be between ${min} and ${max}`}
           inputProps={{ min, max }}
@@ -130,7 +129,7 @@ export const PlayCard: FC<IProps> = ({
         <Stack
           direction="row"
           spacing={2}
-          sx={{ marginTop: 2, height: 40 }}
+          sx={{ mt: 2, height: 40 }}
           justifyContent="center"
         >
           <Button

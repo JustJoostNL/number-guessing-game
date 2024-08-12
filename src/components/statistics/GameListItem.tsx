@@ -40,7 +40,7 @@ export const GameListItem: FC<IProps> = ({ game }) => {
         </ListItemIcon>
 
         <ListItemText
-          primary={`Game ${game.id}`}
+          primary={game.name ?? `Game ${game.id}`}
           primaryTypographyProps={{ fontSize: "1.2rem", fontWeight: "bold" }}
           secondary={
             <Stack direction="row" mt={0.5} spacing={1}>

@@ -21,6 +21,11 @@ export const AtAGlanceCard: FC = () => {
     [filteredGames.length],
   );
 
+  const abandonedGames = useMemo(
+    () => filteredGames.filter((g) => g.abandoned).length,
+    [filteredGames],
+  );
+
   const winRate = useMemo(
     () => (winCount / playedGames) * 100,
     [winCount, playedGames],
@@ -105,6 +110,7 @@ export const AtAGlanceCard: FC = () => {
         <Stat title="Played games" value={playedGames} />
         <Stat title="Wins" value={winCount} />
         <Stat title="Win rate" value={`${winRate.toFixed(2)}%`} />
+        <Stat title="Abandoned games" value={abandonedGames} />
         <Stat title="Average guesses" value={averageGuesses.toFixed(2)} />
         <Stat title="Total game time" value={`${totalGameTime.toFixed(2)}s`} />
         <Stat

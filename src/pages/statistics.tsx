@@ -13,7 +13,7 @@ export default function StatsPage() {
   if (config.games.length === 0) {
     return (
       <ContentLayout title="Stats" titleVariant="h2">
-        <Typography variant="body1" px={2}>
+        <Typography variant="body2" color="text.secondary" px={2}>
           No games played yet.
         </Typography>
         {debug && <JSONTree data={config} />}

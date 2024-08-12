@@ -130,7 +130,7 @@ export const StartGameCard: FC = () => {
           color="primary"
           startIcon={<RocketLaunchRounded />}
           disabled={maxGuessesError}
-          sx={{ display: "flex", margin: "auto", marginTop: 2, width: 200 }}
+          sx={{ display: "flex", margin: "auto", mt: 2, width: 200 }}
           onClick={handleStartGame}
         >
           Start Game

@@ -17,6 +17,16 @@ export interface IGame {
   id: number;
 
   /**
+   * A custom name for the game given by the player.
+   */
+  name?: string;
+
+  /**
+   * A custom description for the game given by the player.
+   */
+  description?: string;
+
+  /**
    * Whether the player has abandoned the game.
    */
   abandoned: boolean;
