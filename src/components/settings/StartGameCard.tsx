@@ -10,11 +10,14 @@ import {
 } from "@mui/material";
 import { RocketLaunchRounded } from "@mui/icons-material";
 import React, { FC, useState, useCallback } from "react";
+import { useRouter } from "next/router";
 import { NumberRangeSlider } from "./NumberRangeSlider";
 
 const MIN_DISTANCE = 2;
 
 export const StartGameCard: FC = () => {
+  const router = useRouter();
+
   const [value, setValue] = useState<number[]>([0, 25]);
   const [enableHints, setEnableHints] = useState<boolean>(true);
   const [maxGuesses, setMaxGuesses] = useState<number>(10);
@@ -29,6 +32,24 @@ export const StartGameCard: FC = () => {
     },
     [setValue],
   );
+
+  const handleStartGame = useCallback(() => {
+    router.push({
+      pathname: "/game",
+      query: {
+        s: btoa(
+          JSON.stringify({
+            v: value,
+            h: enableHints,
+            g: maxGuesses,
+          }),
+        ),
+      },
+    });
+  }, [router, value, enableHints, maxGuesses]);
+
+  const maxGuessesAllowed = value[1] - value[0];
+  const maxGuessesError = maxGuesses < 1 || maxGuesses > maxGuessesAllowed;
 
   return (
     <Card
@@ -84,6 +105,9 @@ export const StartGameCard: FC = () => {
             value={maxGuesses}
             onChange={(ev) => setMaxGuesses(Number(ev.target.value))}
             sx={{ width: 150 }}
+            error={maxGuessesError}
+            helperText={`Must be between 1 and ${maxGuessesAllowed}`}
+            inputProps={{ min: 1, max: maxGuessesAllowed }}
           />
         </ListItem>
 
@@ -91,10 +115,9 @@ export const StartGameCard: FC = () => {
           variant="contained"
           color="primary"
           startIcon={<RocketLaunchRounded />}
+          disabled={maxGuessesError}
           sx={{ display: "flex", margin: "auto", marginTop: 2, width: 150 }}
-          onClick={() => {
-            console.log(value, enableHints, maxGuesses);
-          }}
+          onClick={handleStartGame}
         >
           Start Game
         </Button>
