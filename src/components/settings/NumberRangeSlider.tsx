@@ -24,7 +24,7 @@ export const NumberRangeSlider: FC<IProps> = ({
 
       if (newValue[1] - newValue[0] < minDistance) {
         if (activeThumb === 0) {
-          const clamped = Math.min(newValue[0], 100 - minDistance);
+          const clamped = Math.min(newValue[0], max - minDistance);
           onChange([clamped, clamped + minDistance]);
         } else {
           const clamped = Math.max(newValue[1], minDistance);
@@ -34,7 +34,7 @@ export const NumberRangeSlider: FC<IProps> = ({
         onChange(newValue as number[]);
       }
     },
-    [minDistance, onChange],
+    [max, minDistance, onChange],
   );
 
   return (

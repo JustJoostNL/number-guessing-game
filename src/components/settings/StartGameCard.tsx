@@ -68,7 +68,7 @@ export const StartGameCard: FC = () => {
   return (
     <Card
       sx={{
-        width: "100%",
+        width: "60%",
         margin: "auto",
       }}
     >

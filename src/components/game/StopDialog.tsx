@@ -25,7 +25,6 @@ export const StopDialog: FC<IProps> = ({
   lastAttempt,
 }) => {
   const router = useRouter();
-
   const lastAttemptWasCorrect = lastAttempt === number;
 
   const handleGoHome = useCallback(() => {
@@ -34,7 +33,7 @@ export const StopDialog: FC<IProps> = ({
   }, [router, setOpen]);
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+    <Dialog open={open} onClose={handleGoHome} fullWidth maxWidth="sm">
       <DialogTitle>
         {lastAttemptWasCorrect ? "Congratulations!" : "Game Over!"}
       </DialogTitle>
@@ -42,13 +41,15 @@ export const StopDialog: FC<IProps> = ({
       <DialogContent>
         <Typography variant="body1">
           {lastAttemptWasCorrect
-            ? `You guessed the number ${number} after ${attempts} attempts!`
+            ? `You guessed the number ${number} after ${attempts > 1 ? `${attempts} attempts` : "a single attempt"}!`
             : `You couldn't guess the number ${number} in ${attempts} attempts!`}
         </Typography>
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleGoHome}>Go home</Button>
+        <Button variant="contained" onClick={handleGoHome}>
+          Go home
+        </Button>
       </DialogActions>
     </Dialog>
   );

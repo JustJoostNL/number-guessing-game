@@ -7,9 +7,12 @@ import {
   Alert,
   AlertProps,
   AlertTitle,
+  Stack,
 } from "@mui/material";
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { StopDialog } from "./StopDialog";
+import { useConfig } from "@/hooks/useConfig";
 
 interface IProps {
   number: number;
@@ -26,6 +29,9 @@ interface AlertData {
 }
 
 export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
+  const { config, updateConfig } = useConfig();
+  const router = useRouter();
+
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [input, setInput] = useState<number | null>(null);
   const [attempts, setAttempts] = useState<number>(0);
@@ -58,7 +64,19 @@ export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
               : `The number ${input} is too high, try a lower number!`
             : `The number ${input} is incorrect, try again!`,
     });
-  }, [hints, input, number]);
+
+    if (input === number) {
+      setDialogOpen(true);
+      updateConfig({
+        winCount: config.winCount + 1,
+        playedGames: config.playedGames + 1,
+      });
+    }
+  }, [config.playedGames, config.winCount, hints, input, number, updateConfig]);
+
+  const handleLeaveEarly = useCallback(() => {
+    router.push("/");
+  }, [router]);
 
   const handleInputChange = useCallback(
     (ev: ChangeEvent<HTMLInputElement>) => {
@@ -114,14 +132,33 @@ export const PlayCard: FC<IProps> = ({ number, guesses, hints, min, max }) => {
           inputProps={{ min, max }}
         />
 
-        <Button
-          variant="contained"
-          onClick={handleGuess}
-          sx={{ display: "flex", margin: "auto", marginTop: 2, width: "100%" }}
-          disabled={input === null || input < min || input > max}
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ marginTop: 2, height: 40 }}
+          justifyContent="center"
         >
-          Guess
-        </Button>
+          <Button
+            onClick={handleLeaveEarly}
+            variant="outlined"
+            sx={{ width: "25%" }}
+          >
+            Leave early
+          </Button>
+
+          <Button
+            variant="contained"
+            onClick={handleGuess}
+            sx={{
+              display: "flex",
+              margin: "auto",
+              width: "75%",
+            }}
+            disabled={input === null || input < min || input > max}
+          >
+            Guess
+          </Button>
+        </Stack>
       </CardContent>
     </Card>
   );

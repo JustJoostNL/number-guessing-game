@@ -6,11 +6,13 @@ import {
   Typography,
   TypographyOwnProps,
 } from "@mui/material";
+import { Navbar } from "./Navbar";
 
 interface ContentLayoutProps {
   title: string;
   children: React.ReactNode;
   hideTitle?: boolean;
+  hideNavbar?: boolean;
   titleVariant?: TypographyOwnProps["variant"];
   container?: boolean;
   containerProps?: ContainerProps;
@@ -20,6 +22,7 @@ export const ContentLayout: React.FC<ContentLayoutProps> = ({
   title,
   children,
   hideTitle = false,
+  hideNavbar = false,
   titleVariant = "h3",
   container = false,
   containerProps,
@@ -29,6 +32,7 @@ export const ContentLayout: React.FC<ContentLayoutProps> = ({
 
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column" {...props}>
+      {!hideNavbar && <Navbar />}
       <Box flexGrow={1}>
         <ContainerWrapper {...containerProps}>
           {!hideTitle && title && (
