@@ -17,6 +17,7 @@ interface IProps {
   number: number;
   maxGuesses: number;
   difficulty: number;
+  preventDuplicateGuesses: boolean;
   hintsEnabled: boolean;
   min: number;
   max: number;
@@ -32,6 +33,7 @@ export const PlayCard: FC<IProps> = ({
   number,
   maxGuesses,
   difficulty,
+  preventDuplicateGuesses,
   hintsEnabled,
   min,
   max,
@@ -55,6 +57,19 @@ export const PlayCard: FC<IProps> = ({
   const handleGuess = useCallback(() => {
     if (!input) return;
 
+    const isDuplicate = guesses.some((g) => g.number === input);
+    if (isDuplicate && preventDuplicateGuesses) {
+      const isHigher = input < number;
+      setAlertData({
+        severity: "warning",
+        show: true,
+        message: `You already guessed the number ${input}! The number was ${
+          isHigher ? "higher" : "lower"
+        } than ${input}.`,
+      });
+      return;
+    }
+
     setGuesses([...guesses, { number: input, date: new Date().toISOString() }]);
 
     setAlertData({
@@ -71,7 +86,7 @@ export const PlayCard: FC<IProps> = ({
     });
 
     if (input === number) setDialogOpen(true);
-  }, [guesses, hintsEnabled, input, number]);
+  }, [guesses, hintsEnabled, input, number, preventDuplicateGuesses]);
 
   const handleLeaveEarly = useCallback(() => {
     setAbandoned(true);
@@ -90,6 +105,7 @@ export const PlayCard: FC<IProps> = ({
     <Card sx={{ width: "30%" }}>
       <GameEndDialog
         open={dialogOpen}
+        preventDuplicateGuesses={preventDuplicateGuesses}
         abandoned={abandoned}
         setOpen={setDialogOpen}
         difficulty={difficulty}

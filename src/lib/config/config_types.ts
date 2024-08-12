@@ -42,6 +42,11 @@ export interface IGame {
   maxGuesses: number;
 
   /**
+   * Whether to prevent duplicate guesses for the game.
+   */
+  preventDuplicateGuesses: boolean;
+
+  /**
    * The number that the player is trying to guess.
    */
   number: number;
@@ -82,6 +87,11 @@ export interface IConfig {
    * Whether hints are enabled by default.
    */
   hints: boolean;
+
+  /**
+   * Whether to prevent duplicate guesses by default.
+   */
+  preventDuplicateGuesses: boolean;
 
   /**
    * The maximum number of guesses allowed by default.

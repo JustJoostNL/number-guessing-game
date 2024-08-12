@@ -22,6 +22,8 @@ export const StartGameCard: FC = () => {
 
   const [value, setValue] = useState<number[]>([1, 25]);
   const [enableHints, setEnableHints] = useState<boolean>(true);
+  const [preventDuplicateGuesses, setPreventDuplicateGuesses] =
+    useState<boolean>(false);
   const [maxGuesses, setMaxGuesses] = useState<number>(10);
 
   const handleChange = useCallback(
@@ -39,6 +41,7 @@ export const StartGameCard: FC = () => {
     updateConfig({
       numberRange: value as [number, number],
       hints: enableHints,
+      preventDuplicateGuesses,
       maxGuesses,
     });
 
@@ -49,16 +52,25 @@ export const StartGameCard: FC = () => {
           JSON.stringify({
             v: value,
             h: enableHints,
+            pdg: preventDuplicateGuesses,
             mg: maxGuesses,
           }),
         ),
       },
     });
-  }, [updateConfig, value, enableHints, maxGuesses, router]);
+  }, [
+    updateConfig,
+    value,
+    enableHints,
+    maxGuesses,
+    router,
+    preventDuplicateGuesses,
+  ]);
 
   useEffect(() => {
     setValue(config.numberRange);
     setEnableHints(config.hints);
+    setPreventDuplicateGuesses(config.preventDuplicateGuesses);
     setMaxGuesses(config.maxGuesses);
   }, [config]);
 
@@ -104,6 +116,18 @@ export const StartGameCard: FC = () => {
           <Switch
             checked={enableHints}
             onChange={() => setEnableHints((prev) => !prev)}
+          />
+        </ListItem>
+
+        <ListItem>
+          <ListItemText
+            primary="Prevent duplicate guesses"
+            secondary="If enabled, you can't guess the same number more than once"
+          />
+
+          <Switch
+            checked={preventDuplicateGuesses}
+            onChange={() => setPreventDuplicateGuesses((prev) => !prev)}
           />
         </ListItem>
 

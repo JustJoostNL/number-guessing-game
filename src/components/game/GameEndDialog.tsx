@@ -17,6 +17,7 @@ interface IProps {
   maxGuesses: number;
   guesses: IGuess[];
   difficulty: number;
+  preventDuplicateGuesses: boolean;
   abandoned: boolean;
   numberRange: [number, number];
   hintsEnabled: boolean;
@@ -28,6 +29,7 @@ export const GameEndDialog: FC<IProps> = ({
   setOpen,
   maxGuesses,
   difficulty,
+  preventDuplicateGuesses,
   abandoned,
   guesses,
   numberRange,
@@ -53,6 +55,7 @@ export const GameEndDialog: FC<IProps> = ({
           difficulty,
           number,
           guesses,
+          preventDuplicateGuesses,
           numberRange,
           abandoned,
           hintsEnabled,
@@ -71,6 +74,7 @@ export const GameEndDialog: FC<IProps> = ({
     maxGuesses,
     number,
     numberRange,
+    preventDuplicateGuesses,
     updateConfig,
   ]);
 

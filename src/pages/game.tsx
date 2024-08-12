@@ -83,6 +83,7 @@ export default function GamePage() {
         {generatedNumber && decodedParams && calculatedDifficulty && (
           <PlayCard
             number={generatedNumber}
+            preventDuplicateGuesses={decodedParams?.pdg}
             difficulty={calculatedDifficulty}
             maxGuesses={decodedParams?.mg}
             min={decodedParams?.v[0]}

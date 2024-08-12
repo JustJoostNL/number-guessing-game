@@ -1,6 +1,7 @@
 export interface ISettingsPayload {
   v: number[];
   h: boolean;
+  pdg: boolean;
   mg: number;
 }
 

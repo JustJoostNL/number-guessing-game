@@ -52,6 +52,24 @@ export const AtAGlanceCard: FC = () => {
     [filteredGames, playedGames],
   );
 
+  const duplicateGuesses = useMemo(
+    () =>
+      filteredGames.reduce((acc, game) => {
+        const guesses = game.guesses;
+        const duplicates = guesses.reduce((acc, guess, index) => {
+          if (index === 0) return acc;
+
+          const previousGuesses = guesses.slice(0, index);
+          return previousGuesses.some((g) => g.number === guess.number)
+            ? acc + 1
+            : acc;
+        }, 0);
+
+        return acc + duplicates;
+      }, 0),
+    [filteredGames],
+  );
+
   const averageTimeBetweenGuesses = useMemo(
     () =>
       filteredGames.reduce((acc, game) => {
@@ -112,6 +130,7 @@ export const AtAGlanceCard: FC = () => {
         <Stat title="Win rate" value={`${winRate.toFixed(2)}%`} />
         <Stat title="Abandoned games" value={abandonedGames} />
         <Stat title="Average guesses" value={averageGuesses.toFixed(2)} />
+        <Stat title="Duplicate guesses" value={duplicateGuesses} />
         <Stat title="Total game time" value={`${totalGameTime.toFixed(2)}s`} />
         <Stat
           title="Average game time"

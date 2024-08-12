@@ -90,6 +90,10 @@ export default function SharePage() {
               value={sharedGame.hintsEnabled ? "Enabled" : "Disabled"}
             />
             <Stat
+              title="Prevent Duplicate Guesses"
+              value={sharedGame.preventDuplicateGuesses ? "Yes" : "No"}
+            />
+            <Stat
               title="Date / Time"
               value={new Date(sharedGame.date).toLocaleString()}
             />

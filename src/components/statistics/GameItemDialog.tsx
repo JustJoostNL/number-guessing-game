@@ -67,7 +67,7 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
       </DialogTitle>
 
       <DialogContent>
-        <Typography variant="h6">Game Details</Typography>
+        <Typography variant="h6">Game Metadata</Typography>
 
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0 }}>
           You can edit the name and description of the game here.
@@ -90,13 +90,14 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
         />
 
         <Typography variant="h6" sx={{ mt: 2 }}>
-          Game Statistics
+          Game Details
         </Typography>
 
         <Stack
           direction="row"
           mt={1}
-          spacing={2}
+          spacing={3}
+          rowGap={2}
           flexWrap="wrap"
           alignItems="center"
           justifyContent="center"
@@ -112,6 +113,12 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
             value={game.hintsEnabled ? "Enabled" : "Disabled"}
           />
           <Stat title="Difficulty" value={game.difficulty} />
+          <Stat title="Abandoned" value={game.abandoned ? "Yes" : "No"} />
+
+          <Stat
+            title="Prevent duplicate guesses"
+            value={game.preventDuplicateGuesses ? "Yes" : "No"}
+          />
           <Stat
             title="Date / Time"
             value={new Date(game.date).toLocaleString()}
