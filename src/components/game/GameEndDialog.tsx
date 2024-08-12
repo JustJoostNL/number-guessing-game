@@ -16,6 +16,7 @@ interface IProps {
   setOpen: (open: boolean) => void;
   maxGuesses: number;
   guesses: IGuess[];
+  abandoned: boolean;
   numberRange: [number, number];
   hintsEnabled: boolean;
   number: number;
@@ -25,6 +26,7 @@ export const GameEndDialog: FC<IProps> = ({
   open,
   setOpen,
   maxGuesses,
+  abandoned,
   guesses,
   numberRange,
   hintsEnabled,
@@ -49,6 +51,7 @@ export const GameEndDialog: FC<IProps> = ({
           number,
           guesses,
           numberRange,
+          abandoned,
           hintsEnabled,
           won: lastAttemptWasCorrect,
           date: new Date().toISOString(),
@@ -56,6 +59,7 @@ export const GameEndDialog: FC<IProps> = ({
       ],
     });
   }, [
+    abandoned,
     config.games,
     guesses,
     hintsEnabled,
@@ -75,14 +79,20 @@ export const GameEndDialog: FC<IProps> = ({
   return (
     <Dialog open={open} onClose={handleGoHome} fullWidth maxWidth="sm">
       <DialogTitle>
-        {lastAttemptWasCorrect ? "Congratulations!" : "Game Over!"}
+        {abandoned
+          ? "Abandoned Game"
+          : lastAttemptWasCorrect
+            ? "Congratulations!"
+            : "Game Over!"}
       </DialogTitle>
 
       <DialogContent>
         <Typography variant="body1">
-          {lastAttemptWasCorrect
-            ? `You guessed the number ${number} after ${attempts > 1 ? `${attempts} attempts` : "a single attempt"}!`
-            : `You couldn't guess the number ${number} in ${attempts} attempts!`}
+          {abandoned
+            ? "You have abandoned the game."
+            : lastAttemptWasCorrect
+              ? `You guessed the number ${number} after ${attempts > 1 ? `${attempts} attempts` : "a single attempt"}!`
+              : `You couldn't guess the number ${number} in ${attempts} attempts!`}
         </Typography>
       </DialogContent>
 

@@ -17,6 +17,11 @@ export interface IGame {
   id: number;
 
   /**
+   * Whether the player has abandoned the game.
+   */
+  abandoned: boolean;
+
+  /**
    * The maximum number of guesses allowed for the game.
    */
   maxGuesses: number;
@@ -53,8 +58,23 @@ export interface IGame {
 }
 
 export interface IConfig {
+  /**
+   * The range of numbers that is used by default.
+   */
   numberRange: [number, number];
+
+  /**
+   * Whether hints are enabled by default.
+   */
   hints: boolean;
+
+  /**
+   * The maximum number of guesses allowed by default.
+   */
   maxGuesses: number;
+
+  /**
+   * The games that have been played.
+   */
   games: IGame[];
 }

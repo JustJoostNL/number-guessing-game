@@ -10,7 +10,6 @@ import {
   Stack,
 } from "@mui/material";
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { GameEndDialog } from "./GameEndDialog";
 import { IGuess } from "@/lib/config/config_types";
 
@@ -35,9 +34,8 @@ export const PlayCard: FC<IProps> = ({
   min,
   max,
 }) => {
-  const router = useRouter();
-
   const [input, setInput] = useState<number | null>(null);
+  const [abandoned, setAbandoned] = useState<boolean>(false);
   const [guesses, setGuesses] = useState<IGuess[]>([]);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [alertData, setAlertData] = useState<AlertData>({
@@ -49,8 +47,8 @@ export const PlayCard: FC<IProps> = ({
   const shouldStop = guesses.length >= maxGuesses;
 
   useEffect(() => {
-    if (shouldStop) setDialogOpen(true);
-  }, [shouldStop]);
+    if (shouldStop || abandoned) setDialogOpen(true);
+  }, [shouldStop, abandoned]);
 
   const handleGuess = useCallback(() => {
     if (!input) return;
@@ -74,8 +72,8 @@ export const PlayCard: FC<IProps> = ({
   }, [guesses, hintsEnabled, input, number]);
 
   const handleLeaveEarly = useCallback(() => {
-    router.push("/");
-  }, [router]);
+    setAbandoned(true);
+  }, []);
 
   const handleInputChange = useCallback(
     (ev: ChangeEvent<HTMLInputElement>) => {
@@ -87,14 +85,10 @@ export const PlayCard: FC<IProps> = ({
   );
 
   return (
-    <Card
-      sx={{
-        margin: "auto",
-        width: "30%",
-      }}
-    >
+    <Card sx={{ width: "30%" }}>
       <GameEndDialog
         open={dialogOpen}
+        abandoned={abandoned}
         setOpen={setDialogOpen}
         number={number}
         maxGuesses={maxGuesses}

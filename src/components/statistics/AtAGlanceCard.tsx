@@ -6,12 +6,20 @@ import { useConfig } from "@/hooks/useConfig";
 export const AtAGlanceCard: FC = () => {
   const { config } = useConfig();
 
-  const winCount = useMemo(
-    () => config.games.filter((g) => g.won).length,
+  const filteredGames = useMemo(
+    () => config.games.filter((g) => g.guesses.length > 0),
     [config.games],
   );
 
-  const playedGames = useMemo(() => config.games.length, [config.games]);
+  const winCount = useMemo(
+    () => filteredGames.filter((g) => g.won).length,
+    [filteredGames],
+  );
+
+  const playedGames = useMemo(
+    () => filteredGames.length,
+    [filteredGames.length],
+  );
 
   const winRate = useMemo(
     () => (winCount / playedGames) * 100,
@@ -20,14 +28,14 @@ export const AtAGlanceCard: FC = () => {
 
   const averageGuesses = useMemo(
     () =>
-      config.games.reduce((acc, game) => acc + game.guesses.length, 0) /
+      filteredGames.reduce((acc, game) => acc + game.guesses.length, 0) /
       playedGames,
-    [config.games, playedGames],
+    [filteredGames, playedGames],
   );
 
   const averageGameTime = useMemo(
     () =>
-      config.games.reduce(
+      filteredGames.reduce(
         (acc, game) =>
           acc +
           (new Date(game.date).getTime() -
@@ -36,12 +44,12 @@ export const AtAGlanceCard: FC = () => {
       ) /
       playedGames /
       1000,
-    [config.games, playedGames],
+    [filteredGames, playedGames],
   );
 
   const averageTimeBetweenGuesses = useMemo(
     () =>
-      config.games.reduce((acc, game) => {
+      filteredGames.reduce((acc, game) => {
         const guesses = game.guesses;
         const timeBetweenGuesses = guesses.map((guess, index) => {
           if (index === 0) return 0;
@@ -61,38 +69,19 @@ export const AtAGlanceCard: FC = () => {
       }, 0) /
       playedGames /
       1000,
-    [config.games, playedGames],
+    [filteredGames, playedGames],
   );
 
   const totalGameTime = useMemo(
     () =>
-      config.games.reduce(
+      filteredGames.reduce(
         (acc, game) =>
           acc +
           (new Date(game.date).getTime() -
             new Date(game.guesses[0].date).getTime()),
         0,
       ) / 1000,
-    [config.games],
-  );
-
-  const averageGamesPerDay = useMemo(
-    () =>
-      config.games.reduce((acc, game, index) => {
-        if (index === 0) return 0;
-
-        const previousGame = config.games[index - 1];
-        const timeBetweenGames =
-          new Date(game.date).getTime() - new Date(previousGame.date).getTime();
-
-        return acc + timeBetweenGames;
-      }, 0) /
-      playedGames /
-      1000 /
-      60 /
-      60 /
-      24,
-    [config.games, playedGames],
+    [filteredGames],
   );
 
   return (
@@ -102,7 +91,7 @@ export const AtAGlanceCard: FC = () => {
         maxWidth: 400,
       }}
     >
-      <CardHeader title="Stats" subheader="Your game statistics" />
+      <CardHeader title="Stats" subheader="Your personalised stats" />
 
       <CardContent
         sx={{
@@ -125,10 +114,6 @@ export const AtAGlanceCard: FC = () => {
         <Stat
           title="Average guess interval"
           value={`${averageTimeBetweenGuesses.toFixed(2)}s`}
-        />
-        <Stat
-          title="Average games per day"
-          value={averageGamesPerDay.toFixed(2)}
         />
       </CardContent>
     </Card>

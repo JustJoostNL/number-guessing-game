@@ -1,26 +1,31 @@
 import { Card, CardContent, CardHeader, List } from "@mui/material";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { GameListItem } from "./GameListItem";
 import { useConfig } from "@/hooks/useConfig";
 
 export const GameListCard: FC = () => {
   const { config } = useConfig();
+
+  const sortedGames = useMemo(
+    () =>
+      config.games.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+      ),
+    [config.games],
+  );
+
   return (
-    <Card
-      sx={{
-        width: 600,
-      }}
-    >
+    <Card sx={{ width: "fit-content" }}>
       <CardHeader title="Game List" subheader="List of games played" />
 
       <CardContent>
         <List
           sx={{
-            maxHeight: 200,
+            height: 500,
             overflow: "scroll",
           }}
         >
-          {config.games.map((game) => (
+          {sortedGames.map((game) => (
             <GameListItem key={game.id} game={game} />
           ))}
         </List>

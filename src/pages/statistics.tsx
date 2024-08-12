@@ -1,5 +1,5 @@
 import { JSONTree } from "react-json-tree";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ContentLayout } from "@/components/layouts/ContentLayout";
 import { useConfig } from "@/hooks/useConfig";
 import { GameListCard } from "@/components/statistics/GameListCard";
@@ -9,6 +9,17 @@ import { useDebug } from "@/hooks/useDebug";
 export default function StatsPage() {
   const { config } = useConfig();
   const debug = useDebug();
+
+  if (config.games.length === 0) {
+    return (
+      <ContentLayout title="Stats" titleVariant="h2">
+        <Typography variant="body1" px={2}>
+          No games played yet.
+        </Typography>
+        {debug && <JSONTree data={config} />}
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout title="Stats" titleVariant="h2">
@@ -31,8 +42,8 @@ export default function StatsPage() {
           <AtAGlanceCard />
           <GameListCard />
         </Box>
-        {debug && <JSONTree data={config} />}
       </Box>
+      {debug && <JSONTree data={config} />}
     </ContentLayout>
   );
 }
