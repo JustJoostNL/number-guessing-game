@@ -74,7 +74,15 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
         </Typography>
 
         <TextField
-          label="Name"
+          label="Username (not editable)"
+          fullWidth
+          value={game.username}
+          disabled
+          sx={{ mt: 2 }}
+        />
+
+        <TextField
+          label="Game name"
           fullWidth
           value={game.name}
           onChange={(e) => handleChangeGameMeta(e.target.value, "name")}
@@ -82,7 +90,7 @@ export const GameItemDialog: FC<IProps> = ({ open, setOpen, game }) => {
         />
 
         <TextField
-          label="Description"
+          label="Game description"
           fullWidth
           value={game.description}
           onChange={(e) => handleChangeGameMeta(e.target.value, "description")}

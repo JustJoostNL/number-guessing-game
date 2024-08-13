@@ -1,9 +1,10 @@
 import { IConfig } from "./config_types";
 
 export const defaultConfig: IConfig = {
-  numberRange: [1, 25],
-  hints: true,
-  maxGuesses: 10,
-  preventDuplicateGuesses: false,
+  defaultNumberRange: [1, 25],
+  defaultHintsEnabled: true,
+  defaultMaxGuesses: 10,
+  preventDuplicateGuessesByDefault: false,
+  defaultUsername: null,
   games: [],
 };

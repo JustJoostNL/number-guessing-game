@@ -32,6 +32,11 @@ export interface IGame {
   difficulty: number;
 
   /**
+   * The username of the player.
+   */
+  username: string;
+
+  /**
    * Whether the player has abandoned the game.
    */
   abandoned: boolean;
@@ -81,22 +86,27 @@ export interface IConfig {
   /**
    * The range of numbers that is used by default.
    */
-  numberRange: [number, number];
+  defaultNumberRange: [number, number];
 
   /**
    * Whether hints are enabled by default.
    */
-  hints: boolean;
+  defaultHintsEnabled: boolean;
 
   /**
    * Whether to prevent duplicate guesses by default.
    */
-  preventDuplicateGuesses: boolean;
+  preventDuplicateGuessesByDefault: boolean;
 
   /**
    * The maximum number of guesses allowed by default.
    */
-  maxGuesses: number;
+  defaultMaxGuesses: number;
+
+  /**
+   * The default username for the player.
+   */
+  defaultUsername: string | null;
 
   /**
    * The games that have been played.

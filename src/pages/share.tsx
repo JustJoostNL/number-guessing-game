@@ -79,6 +79,7 @@ export default function SharePage() {
             justifyContent="center"
           >
             <Stat title="Game ID" value={sharedGame.id} />
+            <Stat title="Username" value={sharedGame.username} />
             <Stat title="Guesses" value={sharedGame.guesses.length} />
             <Stat title="Max Guesses" value={sharedGame.maxGuesses} />
             <Stat

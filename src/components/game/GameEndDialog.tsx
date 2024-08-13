@@ -16,6 +16,7 @@ interface IProps {
   setOpen: (open: boolean) => void;
   maxGuesses: number;
   guesses: IGuess[];
+  username: string;
   difficulty: number;
   preventDuplicateGuesses: boolean;
   abandoned: boolean;
@@ -31,6 +32,7 @@ export const GameEndDialog: FC<IProps> = ({
   difficulty,
   preventDuplicateGuesses,
   abandoned,
+  username,
   guesses,
   numberRange,
   hintsEnabled,
@@ -56,6 +58,7 @@ export const GameEndDialog: FC<IProps> = ({
           number,
           guesses,
           preventDuplicateGuesses,
+          username,
           numberRange,
           abandoned,
           hintsEnabled,
@@ -76,6 +79,7 @@ export const GameEndDialog: FC<IProps> = ({
     numberRange,
     preventDuplicateGuesses,
     updateConfig,
+    username,
   ]);
 
   const handleGoHome = useCallback(() => {
@@ -90,8 +94,9 @@ export const GameEndDialog: FC<IProps> = ({
         {abandoned
           ? "Abandoned Game"
           : lastAttemptWasCorrect
-            ? "Congratulations!"
-            : "Game Over!"}
+            ? "Congratulations"
+            : "Game Over"}
+        , {username}!
       </DialogTitle>
 
       <DialogContent>

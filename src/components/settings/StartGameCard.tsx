@@ -22,6 +22,7 @@ export const StartGameCard: FC = () => {
 
   const [value, setValue] = useState<number[]>([1, 25]);
   const [enableHints, setEnableHints] = useState<boolean>(true);
+  const [username, setUsername] = useState<string | null>(null);
   const [preventDuplicateGuesses, setPreventDuplicateGuesses] =
     useState<boolean>(false);
   const [maxGuesses, setMaxGuesses] = useState<number>(10);
@@ -39,10 +40,11 @@ export const StartGameCard: FC = () => {
 
   const handleStartGame = useCallback(() => {
     updateConfig({
-      numberRange: value as [number, number],
-      hints: enableHints,
-      preventDuplicateGuesses,
-      maxGuesses,
+      defaultNumberRange: value as [number, number],
+      defaultHintsEnabled: enableHints,
+      defaultUsername: username,
+      preventDuplicateGuessesByDefault: preventDuplicateGuesses,
+      defaultMaxGuesses: maxGuesses,
     });
 
     router.push({
@@ -52,6 +54,7 @@ export const StartGameCard: FC = () => {
           JSON.stringify({
             v: value,
             h: enableHints,
+            u: username,
             pdg: preventDuplicateGuesses,
             mg: maxGuesses,
           }),
@@ -62,16 +65,18 @@ export const StartGameCard: FC = () => {
     updateConfig,
     value,
     enableHints,
+    preventDuplicateGuesses,
     maxGuesses,
     router,
-    preventDuplicateGuesses,
+    username,
   ]);
 
   useEffect(() => {
-    setValue(config.numberRange);
-    setEnableHints(config.hints);
-    setPreventDuplicateGuesses(config.preventDuplicateGuesses);
-    setMaxGuesses(config.maxGuesses);
+    setValue(config.defaultNumberRange);
+    setEnableHints(config.defaultHintsEnabled);
+    setPreventDuplicateGuesses(config.preventDuplicateGuessesByDefault);
+    setUsername(config.defaultUsername);
+    setMaxGuesses(config.defaultMaxGuesses);
   }, [config]);
 
   const maxGuessesAllowed = value[1] - value[0];
@@ -90,6 +95,21 @@ export const StartGameCard: FC = () => {
       />
 
       <CardContent>
+        <ListItem>
+          <ListItemText
+            primary="Username"
+            secondary="Enter your username to start the game, this will be used to track your stats"
+          />
+
+          <TextField
+            label="Username"
+            sx={{ width: 200 }}
+            inputProps={{ maxLength: 20 }}
+            value={username ?? ""}
+            onChange={(ev) => setUsername(ev.target.value)}
+          />
+        </ListItem>
+
         <ListItem>
           <ListItemText
             primary="Number Range"
@@ -153,7 +173,7 @@ export const StartGameCard: FC = () => {
           variant="contained"
           color="primary"
           startIcon={<RocketLaunchRounded />}
-          disabled={maxGuessesError}
+          disabled={maxGuessesError || !username}
           sx={{ display: "flex", margin: "auto", mt: 2, width: 200 }}
           onClick={handleStartGame}
         >

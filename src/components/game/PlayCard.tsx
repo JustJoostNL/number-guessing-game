@@ -17,6 +17,7 @@ interface IProps {
   number: number;
   maxGuesses: number;
   difficulty: number;
+  username: string;
   preventDuplicateGuesses: boolean;
   hintsEnabled: boolean;
   min: number;
@@ -33,6 +34,7 @@ export const PlayCard: FC<IProps> = ({
   number,
   maxGuesses,
   difficulty,
+  username,
   preventDuplicateGuesses,
   hintsEnabled,
   min,
@@ -110,6 +112,7 @@ export const PlayCard: FC<IProps> = ({
         setOpen={setDialogOpen}
         difficulty={difficulty}
         number={number}
+        username={username}
         maxGuesses={maxGuesses}
         guesses={guesses}
         numberRange={[min, max]}
