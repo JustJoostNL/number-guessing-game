@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { JSONTree } from "react-json-tree";
 import { ContentLayout } from "@/components/layouts/ContentLayout";
 import { Label, LabelColor } from "@/components/shared/Label";
@@ -42,11 +42,14 @@ export default function SharePage() {
   }
 
   return (
-    <ContentLayout title="Shared Game" titleVariant="h2">
+    <ContentLayout
+      title={`Shared Game - ${sharedGame.name ?? sharedGame?.id}`}
+      titleVariant="h2"
+    >
       <Card sx={{ width: "fit-content", maxWidth: "50%", margin: "auto" }}>
         <CardHeader
           title={
-            <React.Fragment>
+            <Fragment>
               {sharedGame?.name ?? `Game ${sharedGame?.id}`}
               <Label
                 color={sharedGame?.won ? LabelColor.SUCCESS : LabelColor.ERROR}
@@ -54,7 +57,7 @@ export default function SharePage() {
               >
                 {sharedGame?.won ? "Won" : "Lost"}
               </Label>
-            </React.Fragment>
+            </Fragment>
           }
           subheader={
             safeValue(sharedGame.description) +
@@ -74,6 +77,7 @@ export default function SharePage() {
             direction="row"
             mt={1}
             spacing={4}
+            rowGap={2}
             flexWrap="wrap"
             alignItems="center"
             justifyContent="center"

@@ -95,8 +95,8 @@ export const PlayCard: FC<IProps> = ({
   }, []);
 
   const handleInputChange = useCallback(
-    (ev: ChangeEvent<HTMLInputElement>) => {
-      const parsed = parseInt(ev.target.value, 10);
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const parsed = parseInt(event.target.value, 10);
 
       if (!isNaN(parsed)) setInput(parsed);
     },

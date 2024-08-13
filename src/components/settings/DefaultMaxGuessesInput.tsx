@@ -1,14 +1,14 @@
 import { TextField } from "@mui/material";
-import { FC, useCallback } from "react";
+import { ChangeEvent, FC, useCallback } from "react";
 import { useConfig } from "@/hooks/useConfig";
 
 export const DefaultMaxGuessesInput: FC = () => {
   const { config, updateConfig } = useConfig();
 
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       updateConfig({
-        defaultMaxGuesses: Number(e.target.value),
+        defaultMaxGuesses: Number(event.target.value),
       });
     },
     [updateConfig],

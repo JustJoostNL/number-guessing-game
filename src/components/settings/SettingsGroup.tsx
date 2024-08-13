@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useCallback, FC } from "react";
+import React, { Fragment, useState, useCallback, FC, ReactNode } from "react";
 import {
   List,
   ListItem,
@@ -29,8 +29,7 @@ interface Setting {
   title: string;
   description: string;
   configKeys: (keyof IConfig)[];
-  input?: React.ReactNode;
-  condition?: boolean;
+  input?: ReactNode;
 }
 
 interface Subgroup {
@@ -41,7 +40,7 @@ interface Subgroup {
 
 interface Custom {
   type: "custom";
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export interface SettingsGroupProps {
@@ -81,7 +80,7 @@ function renderSettings(
         (key) => !deepEqual(config[key], defaultConfig[key]),
       );
 
-      return setting.condition === false ? null : (
+      return (
         <ListItem key={index}>
           <ListItemTextStyled
             primary={
@@ -104,7 +103,9 @@ function renderSettings(
     if (setting.type === "subgroup") {
       return (
         <Fragment key={index}>
-          <ListSubheader>{setting.title}</ListSubheader>
+          <ListSubheader sx={{ position: "static" }}>
+            {setting.title}
+          </ListSubheader>
           {renderSettings(setting.settings, config)}
         </Fragment>
       );

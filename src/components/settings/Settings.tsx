@@ -36,58 +36,74 @@ export const Settings: FC = () => {
         "Here you can set the default values of settings for your games",
       settings: [
         {
-          title: "Default username",
-          description:
-            "The default username that will be used when starting a game",
-          type: "setting",
-          configKeys: ["defaultUsername"],
-          input: (
-            <TextInputSetting label="Username" configKey="defaultUsername" />
-          ),
+          type: "subgroup",
+          title: "User settings",
+          settings: [
+            {
+              title: "Default username",
+              description:
+                "The default username that will be used when starting a game",
+              type: "setting",
+              configKeys: ["defaultUsername"],
+              input: (
+                <TextInputSetting
+                  label="Username"
+                  configKey="defaultUsername"
+                />
+              ),
+            },
+          ],
         },
         {
-          title: "Default number range",
-          description:
-            "The default range of numbers that can be guessed in a game",
-          type: "setting",
-          configKeys: ["defaultNumberRange"],
-          input: (
-            <div style={{ width: 300, marginRight: 10 }}>
-              <DefaultNumberRangeInput />
-            </div>
-          ),
-        },
-        {
-          title: "Enable hints by default",
-          description: "Whether hints should be enabled by default in a game",
-          type: "setting",
-          configKeys: ["defaultHintsEnabled"],
-          input: <SettingsSwitch configKey="defaultHintsEnabled" />,
-        },
-        {
-          title: "Prevent duplicate guesses by default",
-          description:
-            "Whether duplicate guesses should be prevented by default in a game",
-          type: "setting",
-          configKeys: ["preventDuplicateGuessesByDefault"],
-          input: (
-            <SettingsSwitch configKey="preventDuplicateGuessesByDefault" />
-          ),
-        },
-        {
-          title: "Default max guesses",
-          description:
-            "The default maximum amount of guesses that can be made in a game",
-          type: "setting",
-          configKeys: ["defaultMaxGuesses"],
-          input: <DefaultMaxGuessesInput />,
+          type: "subgroup",
+          title: "Game settings",
+          settings: [
+            {
+              title: "Default number range",
+              description:
+                "The default range of numbers that can be guessed in a game",
+              type: "setting",
+              configKeys: ["defaultNumberRange"],
+              input: (
+                <div style={{ width: 300, marginRight: 10 }}>
+                  <DefaultNumberRangeInput />
+                </div>
+              ),
+            },
+            {
+              title: "Enable hints by default",
+              description:
+                "Whether hints should be enabled by default in a game",
+              type: "setting",
+              configKeys: ["defaultHintsEnabled"],
+              input: <SettingsSwitch configKey="defaultHintsEnabled" />,
+            },
+            {
+              title: "Prevent duplicate guesses by default",
+              description:
+                "Whether duplicate guesses should be prevented by default in a game",
+              type: "setting",
+              configKeys: ["preventDuplicateGuessesByDefault"],
+              input: (
+                <SettingsSwitch configKey="preventDuplicateGuessesByDefault" />
+              ),
+            },
+            {
+              title: "Default max guesses",
+              description:
+                "The default maximum amount of guesses that can be made in a game",
+              type: "setting",
+              configKeys: ["defaultMaxGuesses"],
+              input: <DefaultMaxGuessesInput />,
+            },
+          ],
         },
       ],
     },
     {
       defaultOpen: false,
       title: "Other settings",
-      description: "Some other settings that you can change",
+      description: "Miscellaneous settings",
       settings: [
         {
           title: "Use last game settings as default",

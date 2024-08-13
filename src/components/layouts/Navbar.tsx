@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,19 +9,27 @@ import {
   Stack,
 } from "@mui/material";
 import Link from "next/link";
+import {
+  HomeRounded,
+  QueryStatsRounded,
+  SettingsRounded,
+} from "@mui/icons-material";
 
-const navbarContent: { href: string; children: string }[] = [
+const navbarContent: { href: string; children: string; icon?: ReactNode }[] = [
   {
     href: "/",
     children: "Home",
+    icon: <HomeRounded />,
   },
   {
     href: "/statistics",
     children: "Statistics",
+    icon: <QueryStatsRounded />,
   },
   {
     href: "/settings",
     children: "Settings",
+    icon: <SettingsRounded />,
   },
 ];
 
@@ -55,6 +63,7 @@ export const Navbar: FC = () => {
               <Button
                 key={index}
                 sx={{ fontWeight: "bold" }}
+                startIcon={item.icon}
                 color="inherit"
                 LinkComponent={Link}
                 href={item.href}

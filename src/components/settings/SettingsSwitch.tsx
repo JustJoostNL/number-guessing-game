@@ -11,9 +11,9 @@ export const SettingsSwitch: FC<IProps> = ({ configKey }) => {
   const { config, updateConfig } = useConfig();
 
   const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       updateConfig({
-        [configKey]: e.target.checked,
+        [configKey]: event.target.checked,
       });
     },
     [configKey, updateConfig],

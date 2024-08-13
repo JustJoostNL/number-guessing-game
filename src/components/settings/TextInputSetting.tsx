@@ -12,9 +12,9 @@ export const TextInputSetting: FC<IProps> = ({ label, configKey }) => {
   const { config, updateConfig } = useConfig();
 
   const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       updateConfig({
-        [configKey]: e.target.value,
+        [configKey]: event.target.value,
       });
     },
     [configKey, updateConfig],

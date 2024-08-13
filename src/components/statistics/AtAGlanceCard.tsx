@@ -121,6 +121,43 @@ export const AtAGlanceCard: FC = () => {
     [filteredGames],
   );
 
+  const longestLosingStreak = useMemo(
+    () =>
+      filteredGames.reduce((acc, game) => {
+        if (!game.won) {
+          acc += 1;
+        } else {
+          acc = 0;
+        }
+
+        return acc;
+      }, 0),
+    [filteredGames],
+  );
+
+  const longestDaysPlayedStreak = useMemo(() => {
+    const sortedGames = filteredGames.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
+
+    const daysPlayedStreak = sortedGames.reduce((acc, game, index) => {
+      if (index === 0) return acc;
+
+      const previousGame = sortedGames[index - 1];
+      const timeDifference =
+        new Date(game.date).getTime() - new Date(previousGame.date).getTime();
+
+      const oneDay = 1000 * 60 * 60 * 24;
+      if (timeDifference < oneDay) {
+        acc += 1;
+      }
+
+      return acc;
+    }, 0);
+
+    return daysPlayedStreak;
+  }, [filteredGames]);
+
   const mostFrequencyGuessedNumber = useMemo(() => {
     const guesses = filteredGames
       .map((g) => g.guesses)
@@ -173,6 +210,11 @@ export const AtAGlanceCard: FC = () => {
         <Stat title="Duplicate guesses" value={duplicateGuesses} />
         <Stat title="Total game time" value={`${totalGameTime.toFixed(2)}s`} />
         <Stat title="Longest winning streak" value={longestWinningStreak} />
+        <Stat title="Longest losing streak" value={longestLosingStreak} />
+        <Stat
+          title="Longest days played streak"
+          value={longestDaysPlayedStreak}
+        />
         <Stat
           title="Most frequently guessed number"
           value={mostFrequencyGuessedNumber}

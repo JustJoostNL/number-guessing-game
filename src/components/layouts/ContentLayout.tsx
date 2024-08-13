@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, Fragment, ReactNode } from "react";
 import {
   Box,
   Container,
@@ -10,7 +10,7 @@ import { Navbar } from "./Navbar";
 
 interface ContentLayoutProps {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
   hideTitle?: boolean;
   hideNavbar?: boolean;
   titleVariant?: TypographyOwnProps["variant"];
@@ -18,7 +18,7 @@ interface ContentLayoutProps {
   containerProps?: ContainerProps;
 }
 
-export const ContentLayout: React.FC<ContentLayoutProps> = ({
+export const ContentLayout: FC<ContentLayoutProps> = ({
   title,
   children,
   hideTitle = false,
@@ -28,7 +28,7 @@ export const ContentLayout: React.FC<ContentLayoutProps> = ({
   containerProps,
   ...props
 }) => {
-  const ContainerWrapper = container ? Container : React.Fragment;
+  const ContainerWrapper = container ? Container : Fragment;
 
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column" {...props}>
