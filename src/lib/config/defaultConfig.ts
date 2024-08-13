@@ -6,5 +6,6 @@ export const defaultConfig: IConfig = {
   defaultMaxGuesses: 10,
   preventDuplicateGuessesByDefault: false,
   defaultUsername: null,
+  useLastGameSettingsAsDefault: true,
   games: [],
 };

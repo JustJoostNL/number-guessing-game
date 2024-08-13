@@ -99,6 +99,11 @@ export interface IConfig {
   preventDuplicateGuessesByDefault: boolean;
 
   /**
+   * Whether to use the settings of the last game as default.
+   */
+  useLastGameSettingsAsDefault: boolean;
+
+  /**
    * The maximum number of guesses allowed by default.
    */
   defaultMaxGuesses: number;

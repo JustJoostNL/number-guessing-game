@@ -1,7 +1,7 @@
 import React from "react";
 import { JSONTree } from "react-json-tree";
 import { Box } from "@mui/material";
-import { StartGameCard } from "@/components/settings/StartGameCard";
+import { StartGameCard } from "@/components/gameSettings/StartGameCard";
 import { useConfig } from "@/hooks/useConfig";
 import { useDebug } from "@/hooks/useDebug";
 import { ContentLayout } from "@/components/layouts/ContentLayout";

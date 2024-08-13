@@ -39,13 +39,15 @@ export const StartGameCard: FC = () => {
   );
 
   const handleStartGame = useCallback(() => {
-    updateConfig({
-      defaultNumberRange: value as [number, number],
-      defaultHintsEnabled: enableHints,
-      defaultUsername: username,
-      preventDuplicateGuessesByDefault: preventDuplicateGuesses,
-      defaultMaxGuesses: maxGuesses,
-    });
+    if (config.useLastGameSettingsAsDefault) {
+      updateConfig({
+        defaultNumberRange: value as [number, number],
+        defaultHintsEnabled: enableHints,
+        defaultUsername: username,
+        preventDuplicateGuessesByDefault: preventDuplicateGuesses,
+        defaultMaxGuesses: maxGuesses,
+      });
+    }
 
     router.push({
       pathname: "/game",
@@ -62,13 +64,14 @@ export const StartGameCard: FC = () => {
       },
     });
   }, [
-    updateConfig,
+    config.useLastGameSettingsAsDefault,
+    router,
     value,
     enableHints,
+    username,
     preventDuplicateGuesses,
     maxGuesses,
-    router,
-    username,
+    updateConfig,
   ]);
 
   useEffect(() => {

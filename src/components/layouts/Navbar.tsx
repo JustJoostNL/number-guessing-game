@@ -19,6 +19,10 @@ const navbarContent: { href: string; children: string }[] = [
     href: "/statistics",
     children: "Statistics",
   },
+  {
+    href: "/settings",
+    children: "Settings",
+  },
 ];
 
 export const Navbar: FC = () => {
