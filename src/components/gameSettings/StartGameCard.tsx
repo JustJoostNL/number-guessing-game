@@ -7,6 +7,7 @@ import {
   ListItemText,
   Switch,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { RocketLaunchRounded } from "@mui/icons-material";
 import React, { FC, useState, useCallback, useEffect } from "react";
@@ -172,16 +173,23 @@ export const StartGameCard: FC = () => {
           />
         </ListItem>
 
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<RocketLaunchRounded />}
-          disabled={maxGuessesError || !username}
-          sx={{ display: "flex", margin: "auto", mt: 2, width: 200 }}
-          onClick={handleStartGame}
+        <Tooltip
+          title={(maxGuessesError || !username) && "Please fill in all fields"}
+          arrow
         >
-          Start Game
-        </Button>
+          <span>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<RocketLaunchRounded />}
+              disabled={maxGuessesError || !username}
+              sx={{ display: "flex", margin: "auto", mt: 2, width: 200 }}
+              onClick={handleStartGame}
+            >
+              Start Game
+            </Button>
+          </span>
+        </Tooltip>
       </CardContent>
     </Card>
   );

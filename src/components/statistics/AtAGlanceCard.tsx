@@ -107,6 +107,46 @@ export const AtAGlanceCard: FC = () => {
     [filteredGames],
   );
 
+  const longestWinningStreak = useMemo(
+    () =>
+      filteredGames.reduce((acc, game) => {
+        if (game.won) {
+          acc += 1;
+        } else {
+          acc = 0;
+        }
+
+        return acc;
+      }, 0),
+    [filteredGames],
+  );
+
+  const mostFrequencyGuessedNumber = useMemo(() => {
+    const guesses = filteredGames
+      .map((g) => g.guesses)
+      .flat()
+      .map((g) => g.number);
+
+    const numberFrequency = guesses.reduce(
+      (acc, number) => {
+        if (!acc[number]) {
+          acc[number] = 1;
+        } else {
+          acc[number] += 1;
+        }
+
+        return acc;
+      },
+      {} as Record<number, number>,
+    );
+
+    const sortedNumbers = Object.entries(numberFrequency).sort(
+      (a, b) => b[1] - a[1],
+    );
+
+    return sortedNumbers[0];
+  }, [filteredGames]);
+
   return (
     <Card
       sx={{
@@ -132,6 +172,11 @@ export const AtAGlanceCard: FC = () => {
         <Stat title="Average guesses" value={averageGuesses.toFixed(2)} />
         <Stat title="Duplicate guesses" value={duplicateGuesses} />
         <Stat title="Total game time" value={`${totalGameTime.toFixed(2)}s`} />
+        <Stat title="Longest winning streak" value={longestWinningStreak} />
+        <Stat
+          title="Most frequently guessed number"
+          value={mostFrequencyGuessedNumber}
+        />
         <Stat
           title="Average game time"
           value={`${averageGameTime.toFixed(2)}s`}

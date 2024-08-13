@@ -7,10 +7,12 @@ import { generateNumber, ISettingsPayload } from "@/lib/shared";
 import { useDebug } from "@/hooks/useDebug";
 import { ContentLayout } from "@/components/layouts/ContentLayout";
 import { PlayCard } from "@/components/game/PlayCard";
+import { useConfig } from "@/hooks/useConfig";
 
 export default function GamePage() {
   const params = useSearchParams();
   const debug = useDebug();
+  const { config } = useConfig();
   const [generatedNumber, setGeneratedNumber] = useState<number | null>(null);
 
   const decodedParams: ISettingsPayload | "error" | null = useMemo(() => {
@@ -71,7 +73,11 @@ export default function GamePage() {
   }
 
   return (
-    <ContentLayout title="Play" titleVariant="h2">
+    <ContentLayout
+      title="Play"
+      titleVariant="h2"
+      hideNavbar={config.hideNavbarDuringGame}
+    >
       <Box
         sx={{
           margin: "auto",

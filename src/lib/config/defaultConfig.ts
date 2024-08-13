@@ -7,5 +7,6 @@ export const defaultConfig: IConfig = {
   preventDuplicateGuessesByDefault: false,
   defaultUsername: null,
   useLastGameSettingsAsDefault: true,
+  hideNavbarDuringGame: false,
   games: [],
 };

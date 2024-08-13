@@ -19,7 +19,7 @@ import {
   KeyboardArrowUpRounded,
 } from "@mui/icons-material";
 import { alpha } from "@mui/system";
-import { isEqual } from "lodash";
+import deepEqual from "deep-equal";
 import { useConfig } from "../../hooks/useConfig";
 import { IConfig } from "@/lib/config/config_types";
 import { defaultConfig } from "@/lib/config/defaultConfig";
@@ -78,7 +78,7 @@ function renderSettings(
   return settings.map((setting, index) => {
     if (setting.type === "setting") {
       const isEdited = setting.configKeys.some(
-        (key) => !isEqual(config[key], defaultConfig[key]),
+        (key) => !deepEqual(config[key], defaultConfig[key]),
       );
 
       return setting.condition === false ? null : (

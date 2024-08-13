@@ -109,6 +109,11 @@ export interface IConfig {
   defaultMaxGuesses: number;
 
   /**
+   * Whether to hide the navbar.
+   */
+  hideNavbarDuringGame: boolean;
+
+  /**
    * The default username for the player.
    */
   defaultUsername: string | null;

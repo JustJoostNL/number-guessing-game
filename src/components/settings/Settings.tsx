@@ -8,6 +8,8 @@ import {
 } from "./SettingsGroup";
 import { TextInputSetting } from "./TextInputSetting";
 import { SettingsSwitch } from "./SettingsSwitch";
+import { DefaultNumberRangeInput } from "./DefaultNumberRangeInput";
+import { DefaultMaxGuessesInput } from "./DefaultMaxGuessesInput";
 import { useConfig } from "@/hooks/useConfig";
 import { useDebug } from "@/hooks/useDebug";
 import { defaultConfig } from "@/lib/config/defaultConfig";
@@ -43,6 +45,43 @@ export const Settings: FC = () => {
             <TextInputSetting label="Username" configKey="defaultUsername" />
           ),
         },
+        {
+          title: "Default number range",
+          description:
+            "The default range of numbers that can be guessed in a game",
+          type: "setting",
+          configKeys: ["defaultNumberRange"],
+          input: (
+            <div style={{ width: 300, marginRight: 10 }}>
+              <DefaultNumberRangeInput />
+            </div>
+          ),
+        },
+        {
+          title: "Enable hints by default",
+          description: "Whether hints should be enabled by default in a game",
+          type: "setting",
+          configKeys: ["defaultHintsEnabled"],
+          input: <SettingsSwitch configKey="defaultHintsEnabled" />,
+        },
+        {
+          title: "Prevent duplicate guesses by default",
+          description:
+            "Whether duplicate guesses should be prevented by default in a game",
+          type: "setting",
+          configKeys: ["preventDuplicateGuessesByDefault"],
+          input: (
+            <SettingsSwitch configKey="preventDuplicateGuessesByDefault" />
+          ),
+        },
+        {
+          title: "Default max guesses",
+          description:
+            "The default maximum amount of guesses that can be made in a game",
+          type: "setting",
+          configKeys: ["defaultMaxGuesses"],
+          input: <DefaultMaxGuessesInput />,
+        },
       ],
     },
     {
@@ -57,6 +96,13 @@ export const Settings: FC = () => {
           type: "setting",
           configKeys: ["useLastGameSettingsAsDefault"],
           input: <SettingsSwitch configKey="useLastGameSettingsAsDefault" />,
+        },
+        {
+          title: "Hide navbar during game",
+          description: "Whether to hide the navbar during a game",
+          type: "setting",
+          configKeys: ["hideNavbarDuringGame"],
+          input: <SettingsSwitch configKey="hideNavbarDuringGame" />,
         },
       ],
     },
