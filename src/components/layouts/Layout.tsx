@@ -11,12 +11,18 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <>
       <Head>
         <title>Number Guessing Game</title>
-        <meta name="description" content="A simple atomic clock app" />
-        <meta name="application-name" content="Atomic Clock" />
+        <meta name="description" content="Number Guessing Game" />
+        <meta name="application-name" content="Number Guessing Game" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Atomic Clock" />
-        <meta name="description" content="A simple atomic clock app" />
+        <meta
+          name="apple-mobile-web-app-title"
+          content="Number Guessing Game"
+        />
+        <meta
+          name="description"
+          content="A simple minimalistic number guessing game."
+        />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#000000" />
